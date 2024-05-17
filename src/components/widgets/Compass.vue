@@ -102,7 +102,7 @@ const renderCanvas = (): void => {
 
   // Set canvas general properties
   const fontSize = 0.13 * smallestDimension.value
-  const baseLineWidth = 0.03 * halfCanvasSize
+  const baseLineWidth = 0.02 * halfCanvasSize
 
   ctx.textAlign = 'center'
   ctx.strokeStyle = 'white'
@@ -161,6 +161,19 @@ const renderCanvas = (): void => {
     ctx.restore()
   }
 
+  // // home 
+  // for (const angleDegrees of sequentialArray(360)) {
+  //   if (angleDegrees % 9 !== 0) continue
+  //   ctx.save()
+  //   ctx.lineWidth = 0.25 * baseLineWidth
+  //   ctx.rotate(radians(Number(angleDegrees)))
+  //   ctx.beginPath()
+  //   ctx.moveTo(1.1 * outerIndicatorRadius, 0)
+  //   ctx.lineTo(outerCircleRadius, 0)
+  //   ctx.stroke()
+  //   ctx.restore()
+  // }
+  
   // Draw outer circle
   ctx.beginPath()
   ctx.arc(0, 0, outerCircleRadius, 0, radians(360))
@@ -173,7 +186,7 @@ const renderCanvas = (): void => {
     ctx.rotate(-radians(renderVariables.yawAngleDegrees))
   }
   ctx.beginPath()
-  ctx.lineWidth = 1
+  ctx.lineWidth = 2
   ctx.strokeStyle = 'red'
   ctx.fillStyle = 'red'
   const triangleBaseSize = 0.05 * halfCanvasSize
@@ -184,6 +197,33 @@ const renderCanvas = (): void => {
   ctx.closePath()
   ctx.fill()
   ctx.stroke()
+
+const innerIndicatorRadius2 = halfCanvasSize / 2;
+const outerIndicatorRadius2 = halfCanvasSize;
+const triangleBaseSize2 = 0.05 * halfCanvasSize;
+
+
+if (widget.value.options.headingStyle == HeadingStyle.NORTH_UP) {
+    ctx.rotate(radians(renderVariables.yawAngleDegrees))
+  } else {
+    ctx.rotate(-radians(renderVariables.yawAngleDegrees))
+  }
+ctx.beginPath();
+ctx.lineWidth = 2;
+ctx.strokeStyle = 'green';
+ctx.fillStyle = 'green';
+
+// Define the home icon triangle (roof)
+ctx.moveTo(innerIndicatorRadius2, triangleBaseSize2);
+ctx.lineTo(outerIndicatorRadius2 - 0.5 * triangleBaseSize2, 0);
+ctx.lineTo(innerIndicatorRadius2, -triangleBaseSize2);
+ctx.lineTo(innerIndicatorRadius2, triangleBaseSize2);
+
+ctx.closePath();
+ctx.fill();
+ctx.stroke();
+
+
 }
 
 /**
