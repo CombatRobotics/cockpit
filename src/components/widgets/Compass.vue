@@ -13,6 +13,7 @@
         <div class="flex items-center justify-between w-full my-1">
           <span class="mr-1 text-slate-100">Heading style</span>
           <div class="w-40"><Dropdown v-model="widget.options.headingStyle" :options="headingOptions" /></div>
+          
         </div>
       </div>
     </div>
@@ -31,8 +32,17 @@ import { degrees, radians, resetCanvas, sequentialArray } from '@/libs/utils'
 import { useMainVehicleStore } from '@/stores/mainVehicle'
 import { useWidgetManagerStore } from '@/stores/widgetManager'
 import type { Widget } from '@/types/widgets'
+import ROSLIB from 'roslib'
 
 const widgetStore = useWidgetManagerStore()
+
+const greenMarkerValue = ref(0);
+
+// const updateGreenMarkerValue = (value) => {
+
+// greenMarkerValue.value = value;
+
+// };
 
 datalogger.registerUsage(DatalogVariable.heading)
 const store = useMainVehicleStore()
@@ -82,8 +92,10 @@ onBeforeMount(() => {
 
 onMounted(() => {
   // Set initial value to 0.01 since 0.0 and 360 does not render anything
+  
   adjustLinesX()
   renderCanvas()
+
 })
 
 // Calculates the smallest between the widget dimensions, so we can keep the inner content always inside it, without overlays
@@ -179,6 +191,36 @@ const renderCanvas = (): void => {
   ctx.arc(0, 0, outerCircleRadius, 0, radians(360))
   ctx.stroke()
 
+  /////////////////////// ROS Topic subsciption and update of green marker value ///////////////////
+
+  const ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+  ros.on('connection', function() {
+  console.log('Connected to websocket server.');
+  });
+  
+  ros.on('error', function(error) {
+  console.log('Error connecting to websocket server: ', error);
+  });
+  
+  ros.on('close', function() {
+  console.log('Connection to websocket server closed.');
+  });
+  
+  const listener = new ROSLIB.Topic({
+  ros: ros,
+  name: '/true_heading',
+  messageType: 'std_msgs/Float32'
+  });
+  
+  listener.subscribe((message: any) => {
+  // updateGreenMarkerValue(message.data);
+  renderVariables.heading=message.data
+  });
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
   // Draw central indicator
   if (widget.value.options.headingStyle == HeadingStyle.NORTH_UP) {
     ctx.rotate(radians(renderVariables.yawAngleDegrees))
@@ -204,9 +246,9 @@ const triangleBaseSize2 = 0.05 * halfCanvasSize;
 
 
 if (widget.value.options.headingStyle == HeadingStyle.NORTH_UP) {
-    ctx.rotate(radians(renderVariables.yawAngleDegrees))
+    ctx.rotate(radians(renderVariables.heading))
   } else {
-    ctx.rotate(-radians(renderVariables.yawAngleDegrees))
+    ctx.rotate(-radians(renderVariables.heading))
   }
 ctx.beginPath();
 ctx.lineWidth = 2;
@@ -246,9 +288,10 @@ watch(store.attitude, (attitude) => {
 })
 
 // eslint-disable-next-line jsdoc/require-jsdoc
-type RenderVariables = { yawAngleDegrees: number }
+type RenderVariables = { yawAngleDegrees: number, heading: number }
 // Object used to store current render state
-const renderVariables = reactive<RenderVariables>({ yawAngleDegrees: 0 })
+// const renderVariables = reactive<RenderVariables>({ yawAngleDegrees: 0, heading: 30 })
+const renderVariables = reactive<RenderVariables>({ yawAngleDegrees: 0, heading: greenMarkerValue.value });
 
 // Update the X position of each line in the render variables with GSAP to smooth the transition
 const adjustLinesX = (): void => {
