@@ -32,11 +32,14 @@ import { degrees, radians, resetCanvas, sequentialArray } from '@/libs/utils'
 import { useMainVehicleStore } from '@/stores/mainVehicle'
 import { useWidgetManagerStore } from '@/stores/widgetManager'
 import type { Widget } from '@/types/widgets'
+import { useRosSubscription } from '@/composables/useRosSubscription'
+
+
 import ROSLIB from 'roslib'
 
 const widgetStore = useWidgetManagerStore()
 
-const greenMarkerValue = ref(0);
+// const greenMarkerValue = ref(0);
 
 // const updateGreenMarkerValue = (value) => {
 
@@ -44,7 +47,7 @@ const greenMarkerValue = ref(0);
 
 // };
 
-datalogger.registerUsage(DatalogVariable.heading)
+// datalogger.registerUsage(DatalogVariable.heading)
 const store = useMainVehicleStore()
 const compassRoot = ref()
 const canvasRef = ref<HTMLCanvasElement | undefined>()
@@ -111,6 +114,17 @@ const renderCanvas = (): void => {
   resetCanvas(ctx)
 
   const halfCanvasSize = 0.5 * smallestDimension.value
+
+  ////////////////////////// ROS SUBSCRIPTION ////////////////////////////////////////
+
+  const { greenMarkerValue } = useRosSubscription('/true_heading', 'std_msgs/Float32')
+
+  watch(greenMarkerValue, (newVal) => {
+    renderVariables.heading = newVal
+  })
+
+  ////////////////////////// ROS SUBSCRIPTION ////////////////////////////////////////
+
 
   // Set canvas general properties
   const fontSize = 0.13 * smallestDimension.value
@@ -191,33 +205,36 @@ const renderCanvas = (): void => {
   ctx.arc(0, 0, outerCircleRadius, 0, radians(360))
   ctx.stroke()
 
-  /////////////////////// ROS Topic subsciption and update of green marker value ///////////////////
+  // const { greenMarkerValue } = useRosSubscription('/true_heading', 'std_msgs/Float32');
+  // renderVariables.heading = greenMarkerValue.value;
+  ///////////////////// ROS Topic subsciption and update of green marker value ///////////////////
 
-  const ros = new ROSLIB.Ros({
-    url: 'ws://localhost:9090'
-  });
-  ros.on('connection', function() {
-  console.log('Connected to websocket server.');
-  });
+  // const ros = new ROSLIB.Ros({
+  //   url: 'ws://localhost:9090'
+  // });
+  // ros.on('connection', function() {
+  // console.log('Connected to websocket server.');
+  // });
   
-  ros.on('error', function(error) {
-  console.log('Error connecting to websocket server: ', error);
-  });
+  // ros.on('error', function(error) {
+  // console.log('Error connecting to websocket server: ', error);
+  // });
   
-  ros.on('close', function() {
-  console.log('Connection to websocket server closed.');
-  });
+  // ros.on('close', function() {
+  // console.log('Connection to websocket server closed.');
+  // });
   
-  const listener = new ROSLIB.Topic({
-  ros: ros,
-  name: '/true_heading',
-  messageType: 'std_msgs/Float32'
-  });
+  // const listener = new ROSLIB.Topic({
+  // ros: ros,
+  // name: '/true_heading',
+  // messageType: 'std_msgs/Float32'
+  // });
   
-  listener.subscribe((message: any) => {
-  // updateGreenMarkerValue(message.data);
-  renderVariables.heading=message.data
-  });
+  // listener.subscribe((message: any) => {
+  // // updateGreenMarkerValue(message.data);
+  // renderVariables.heading=message.data
+  // // const renderVariables = reactive<RenderVariables>({ yawAngleDegrees: 0, heading: message.data });
+  // });
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -291,7 +308,7 @@ watch(store.attitude, (attitude) => {
 type RenderVariables = { yawAngleDegrees: number, heading: number }
 // Object used to store current render state
 // const renderVariables = reactive<RenderVariables>({ yawAngleDegrees: 0, heading: 30 })
-const renderVariables = reactive<RenderVariables>({ yawAngleDegrees: 0, heading: greenMarkerValue.value });
+const renderVariables = reactive<RenderVariables>({ yawAngleDegrees: 0, heading: 0 });
 
 // Update the X position of each line in the render variables with GSAP to smooth the transition
 const adjustLinesX = (): void => {
@@ -321,6 +338,8 @@ watch(renderVariables, () => {
   if (!widgetStore.isWidgetVisible(widget.value)) return
   nextTick(() => renderCanvas())
 })
+
+
 </script>
 
 <style scoped>
