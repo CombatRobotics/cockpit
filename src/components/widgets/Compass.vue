@@ -32,7 +32,7 @@ import { degrees, radians, resetCanvas, sequentialArray } from '@/libs/utils'
 import { useMainVehicleStore } from '@/stores/mainVehicle'
 import { useWidgetManagerStore } from '@/stores/widgetManager'
 import type { Widget } from '@/types/widgets'
-import { useRosSubscription } from '@/composables/useRosSubscription'
+import { getHomeHeading } from '@/composables/useRosSubscription'
 
 
 import ROSLIB from 'roslib'
@@ -117,7 +117,7 @@ const renderCanvas = (): void => {
 
   ////////////////////////// ROS SUBSCRIPTION ////////////////////////////////////////
 
-  const { greenMarkerValue } = useRosSubscription('/true_heading', 'std_msgs/Float32')
+  const { greenMarkerValue } = getHomeHeading('/true_heading', 'std_msgs/Float32')
 
   watch(greenMarkerValue, (newVal) => {
     renderVariables.heading = newVal

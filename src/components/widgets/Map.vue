@@ -99,7 +99,8 @@ import { useMissionStore } from '@/stores/mission'
 import { useWidgetManagerStore } from '@/stores/widgetManager'
 import type { WaypointCoordinates } from '@/types/mission'
 import type { Widget } from '@/types/widgets'
-
+import ROSLIB from 'roslib'
+import { initializeRosPolyline } from '@/composables/useRosSubscription';
 // Define widget props
 // eslint-disable-next-line jsdoc/require-jsdoc
 const props = defineProps<{ widget: Widget }>()
@@ -147,8 +148,47 @@ const baseMaps = {
   'OpenStreetMap': osm,
   'Esri World Imagery': esri,
 }
-
+/////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
+const polylineCoordinates = ref<LatLngTuple[]>([]);
 onMounted(async () => {
+
+//   const ros = new ROSLIB.Ros({
+//     url: 'ws://localhost:9090' // Adjust the URL to your ROS setup
+//   })
+
+//   ros.on('connection', () => {
+//     console.log('Connected to ROS websocket server.')
+//   })
+
+//   ros.on('error', (error) => {
+//     console.log('Error connecting to ROS websocket server: ', error)
+//   })
+
+//   ros.on('close', () => {
+//     console.log('Connection to ROS websocket server closed.')
+//   })
+
+//   // Create a new topic listener for NavSatFix messages
+//   const navSatFixTopic = new ROSLIB.Topic({
+//     ros: ros,
+//     name: '/random_navsat_fix', // Adjust the topic name to your ROS setup
+//     messageType: 'sensor_msgs/NavSatFix'
+//   })
+
+//   navSatFixTopic.subscribe((message: any) => {
+//   const { latitude, longitude } = message;
+//   if (latitude !== undefined && longitude !== undefined) {
+//     const coordinates: LatLngTuple = [latitude, longitude];
+//     polylineCoordinates.value.push(coordinates);
+
+//     const polyline = L.polyline(polylineCoordinates.value, { color: 'green' });
+//     polyline.addTo(map.value!); // Add the polyline to the map
+//   }
+// });
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
   // Bind leaflet instance to map element
   map.value = L.map(mapId.value, { layers: [osm, esri] }).setView(mapCenter.value as LatLngTuple, zoom.value) as Map
 
@@ -192,6 +232,14 @@ onMounted(async () => {
 
   // Pan map to home on mounting
   targetFollower.goToTarget(WhoToFollow.HOME)
+
+
+  initializeRosPolyline(
+    'ws://localhost:9090', // Adjust the URL to your ROS setup
+    '/random_navsat_fix',
+    'sensor_msgs/NavSatFix',
+    map.value
+  );
 })
 
 // Before unmounting:
