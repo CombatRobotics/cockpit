@@ -2,9 +2,6 @@
 
 import ROSLIB from 'roslib'
 
-interface ROSResponse {
-  success: boolean;
-}
 
 export const handleService = (
   ros: ROSLIB.Ros,
@@ -30,12 +27,15 @@ export const handleService = (
 
     if (mapView) {
       response.success = true;
+      console.log('Response :', response);
       store.selectView(mapView);
     } else {
       response.success = false;
       console.warn('Map View not found');
     }
 
-    response.send();
+    response.success;
+
+    return true;
   });
 };
