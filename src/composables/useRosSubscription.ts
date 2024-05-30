@@ -43,6 +43,40 @@ export function getHomeHeading(topicName: string, messageType: string) {
   };
 }
 
+export function getViewName(topicName: string, messageType: string) {
+  const viewToSet = ref(0);
+
+  const ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', () => {
+    console.log('Connected to websocket server.');
+  });
+
+  ros.on('error', (error) => {
+    console.log('Error connecting to websocket server: ', error);
+  });
+
+  ros.on('close', () => {
+    console.log('Connection to websocket server closed.');
+  });
+
+  const listener = new ROSLIB.Topic({
+    ros: ros,
+    name: topicName,
+    messageType: messageType
+  });
+
+  listener.subscribe((message: any) => {
+    viewToSet.value = message.data;
+  });
+
+  return {
+    viewToSet
+  };
+}
+
 export function initializeRosPolyline(rosUrl: string, topicName: string, messageType: string, map: Map) {
   const ros = new ROSLIB.Ros({
     url: rosUrl,
