@@ -78,9 +78,13 @@ npm install roslib
 The cockpit requires a websocket to be opened inorder to access the ros interfaces.
 
 Install `rosbridge_server` using the following command:
-`sudo apt install ros-humble-rosbridge-server`
+```
+sudo apt install ros-humble-rosbridge-server
+```
 
 Launch the `rosbridge_server` using the command:
-`ros2 launch rosbridge_server rosbridge_socket_launch.xml`
+```
+ros2 launch rosbridge_server rosbridge_socket_launch.xml
+```
 
 
