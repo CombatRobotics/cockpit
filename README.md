@@ -66,3 +66,21 @@ docker-compose -f sim.yml --profile ardusub up
 ```
 
 Assuming you have run the `bun run dev --host` command, you can access the simulation environment by opening the browser and accessing `localhost:5173`.
+
+## Connecting to ROS
+
+Ros topics can be accessed in the cockpit using the roslibjs library.
+roslib can be installed using npm using the following command:
+
+```
+npm install roslib
+```
+The cockpit requires a websocket to be opened inorder to access the ros interfaces.
+
+Install `rosbridge_server` using the following command:
+`sudo apt install ros-humble-rosbridge-server`
+
+Launch the `rosbridge_server` using the command:
+`ros2 launch rosbridge_server rosbridge_socket_launch.xml`
+
+
