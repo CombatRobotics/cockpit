@@ -13,6 +13,7 @@
         <div class="flex items-center justify-between w-full my-1">
           <span class="mr-1 text-slate-100">Heading style</span>
           <div class="w-40"><Dropdown v-model="widget.options.headingStyle" :options="headingOptions" /></div>
+          
         </div>
       </div>
     </div>
@@ -31,10 +32,22 @@ import { degrees, radians, resetCanvas, sequentialArray } from '@/libs/utils'
 import { useMainVehicleStore } from '@/stores/mainVehicle'
 import { useWidgetManagerStore } from '@/stores/widgetManager'
 import type { Widget } from '@/types/widgets'
+import { getHomeHeading } from '@/composables/useRosSubscription'
+
+
+import ROSLIB from 'roslib'
 
 const widgetStore = useWidgetManagerStore()
 
-datalogger.registerUsage(DatalogVariable.heading)
+// const greenMarkerValue = ref(0);
+
+// const updateGreenMarkerValue = (value) => {
+
+// greenMarkerValue.value = value;
+
+// };
+
+// datalogger.registerUsage(DatalogVariable.heading)
 const store = useMainVehicleStore()
 const compassRoot = ref()
 const canvasRef = ref<HTMLCanvasElement | undefined>()
@@ -82,8 +95,10 @@ onBeforeMount(() => {
 
 onMounted(() => {
   // Set initial value to 0.01 since 0.0 and 360 does not render anything
+  
   adjustLinesX()
   renderCanvas()
+
 })
 
 // Calculates the smallest between the widget dimensions, so we can keep the inner content always inside it, without overlays
@@ -100,9 +115,20 @@ const renderCanvas = (): void => {
 
   const halfCanvasSize = 0.5 * smallestDimension.value
 
+  ////////////////////////// ROS SUBSCRIPTION ////////////////////////////////////////
+
+  const { greenMarkerValue } = getHomeHeading('/true_heading', 'std_msgs/Float32')
+
+  watch(greenMarkerValue, (newVal) => {
+    renderVariables.heading = newVal
+  })
+
+  ////////////////////////// ROS SUBSCRIPTION ////////////////////////////////////////
+
+
   // Set canvas general properties
   const fontSize = 0.13 * smallestDimension.value
-  const baseLineWidth = 0.03 * halfCanvasSize
+  const baseLineWidth = 0.02 * halfCanvasSize
 
   ctx.textAlign = 'center'
   ctx.strokeStyle = 'white'
@@ -161,10 +187,56 @@ const renderCanvas = (): void => {
     ctx.restore()
   }
 
+  // // home 
+  // for (const angleDegrees of sequentialArray(360)) {
+  //   if (angleDegrees % 9 !== 0) continue
+  //   ctx.save()
+  //   ctx.lineWidth = 0.25 * baseLineWidth
+  //   ctx.rotate(radians(Number(angleDegrees)))
+  //   ctx.beginPath()
+  //   ctx.moveTo(1.1 * outerIndicatorRadius, 0)
+  //   ctx.lineTo(outerCircleRadius, 0)
+  //   ctx.stroke()
+  //   ctx.restore()
+  // }
+  
   // Draw outer circle
   ctx.beginPath()
   ctx.arc(0, 0, outerCircleRadius, 0, radians(360))
   ctx.stroke()
+
+  // const { greenMarkerValue } = useRosSubscription('/true_heading', 'std_msgs/Float32');
+  // renderVariables.heading = greenMarkerValue.value;
+  ///////////////////// ROS Topic subsciption and update of green marker value ///////////////////
+
+  // const ros = new ROSLIB.Ros({
+  //   url: 'ws://localhost:9090'
+  // });
+  // ros.on('connection', function() {
+  // console.log('Connected to websocket server.');
+  // });
+  
+  // ros.on('error', function(error) {
+  // console.log('Error connecting to websocket server: ', error);
+  // });
+  
+  // ros.on('close', function() {
+  // console.log('Connection to websocket server closed.');
+  // });
+  
+  // const listener = new ROSLIB.Topic({
+  // ros: ros,
+  // name: '/true_heading',
+  // messageType: 'std_msgs/Float32'
+  // });
+  
+  // listener.subscribe((message: any) => {
+  // // updateGreenMarkerValue(message.data);
+  // renderVariables.heading=message.data
+  // // const renderVariables = reactive<RenderVariables>({ yawAngleDegrees: 0, heading: message.data });
+  // });
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
 
   // Draw central indicator
   if (widget.value.options.headingStyle == HeadingStyle.NORTH_UP) {
@@ -173,7 +245,7 @@ const renderCanvas = (): void => {
     ctx.rotate(-radians(renderVariables.yawAngleDegrees))
   }
   ctx.beginPath()
-  ctx.lineWidth = 1
+  ctx.lineWidth = 2
   ctx.strokeStyle = 'red'
   ctx.fillStyle = 'red'
   const triangleBaseSize = 0.05 * halfCanvasSize
@@ -184,6 +256,33 @@ const renderCanvas = (): void => {
   ctx.closePath()
   ctx.fill()
   ctx.stroke()
+
+const innerIndicatorRadius2 = halfCanvasSize / 2;
+const outerIndicatorRadius2 = halfCanvasSize;
+const triangleBaseSize2 = 0.05 * halfCanvasSize;
+
+
+if (widget.value.options.headingStyle == HeadingStyle.NORTH_UP) {
+    ctx.rotate(radians(renderVariables.heading))
+  } else {
+    ctx.rotate(-radians(renderVariables.heading))
+  }
+ctx.beginPath();
+ctx.lineWidth = 2;
+ctx.strokeStyle = 'green';
+ctx.fillStyle = 'green';
+
+// Define the home icon triangle (roof)
+ctx.moveTo(innerIndicatorRadius2, triangleBaseSize2);
+ctx.lineTo(outerIndicatorRadius2 - 0.5 * triangleBaseSize2, 0);
+ctx.lineTo(innerIndicatorRadius2, -triangleBaseSize2);
+ctx.lineTo(innerIndicatorRadius2, triangleBaseSize2);
+
+ctx.closePath();
+ctx.fill();
+ctx.stroke();
+
+
 }
 
 /**
@@ -206,9 +305,10 @@ watch(store.attitude, (attitude) => {
 })
 
 // eslint-disable-next-line jsdoc/require-jsdoc
-type RenderVariables = { yawAngleDegrees: number }
+type RenderVariables = { yawAngleDegrees: number, heading: number }
 // Object used to store current render state
-const renderVariables = reactive<RenderVariables>({ yawAngleDegrees: 0 })
+// const renderVariables = reactive<RenderVariables>({ yawAngleDegrees: 0, heading: 30 })
+const renderVariables = reactive<RenderVariables>({ yawAngleDegrees: 0, heading: 0 });
 
 // Update the X position of each line in the render variables with GSAP to smooth the transition
 const adjustLinesX = (): void => {
@@ -238,6 +338,8 @@ watch(renderVariables, () => {
   if (!widgetStore.isWidgetVisible(widget.value)) return
   nextTick(() => renderCanvas())
 })
+
+
 </script>
 
 <style scoped>

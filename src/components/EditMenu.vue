@@ -301,6 +301,9 @@ import { type Profile, type View, type Widget, WidgetType } from '@/types/widget
 
 import Button from './Button.vue'
 import MiniWidgetInstantiator from './MiniWidgetInstantiator.vue'
+// import { getViewName } from '@/composables/useRosSubscription'
+import ROSLIB from 'roslib'
+import { handleService } from '@/composables/useRosService'
 
 const store = useWidgetManagerStore()
 const trashList = ref<Widget[]>([])
@@ -427,6 +430,21 @@ onMounted(() => {
       { passive: false }
     )
   })
+
+  const ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090', // Update this with your ROS server URL
+  });
+
+  ros.on('connection', () => {
+    console.log('Connected to ROS');
+    handleService(
+      ros,
+      store,
+      'get_map_view', // Update with the actual service name
+      'interfaces/MapView' // Update with the actual service type
+    );
+  });
+      
 })
 
 // eslint-disable-next-line jsdoc/require-jsdoc, no-redeclare
