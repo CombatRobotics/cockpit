@@ -70,7 +70,7 @@ export const widgetProfiles: Profile[] = [
               height: 0.118,
             },
             options: {
-              headingStyle: 'North Up',
+              headingStyle: 'Head Up',
             },
             managerVars: defaultWidgetManagerVars,
           },
@@ -231,7 +231,7 @@ export const widgetProfiles: Profile[] = [
               height: 0.118,
             },
             options: {
-              headingStyle: 'North Up',
+              headingStyle: 'Head Up',
             },
             managerVars: defaultWidgetManagerVars,
           },
@@ -635,7 +635,7 @@ export const widgetProfiles: Profile[] = [
               height: 0.118,
             },
             options: {
-              headingStyle: 'North Up',
+              headingStyle: 'Head Up',
             },
             managerVars: defaultWidgetManagerVars,
           },

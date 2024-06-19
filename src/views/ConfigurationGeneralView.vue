@@ -49,6 +49,7 @@
             class="mx-1 mb-5 pa-0"
             rounded="lg"
             hide-details
+            :value="true"
           />
 
           <v-text-field
@@ -239,6 +240,9 @@ const setWebRTCSignallingURI = async (): Promise<void> => {
   await webRTCSignallingForm.value.validate()
   mainVehicleStore.webRTCSignallingURI.val = webRTCSignallingURI.value.val
 }
+
+
+
 </script>
 
 <style scoped>

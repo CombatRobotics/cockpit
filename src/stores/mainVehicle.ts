@@ -94,7 +94,7 @@ export const useMainVehicleStore = defineStore('main-vehicle', () => {
   const _mainConnectionURI = new CustomizableParameter<Connection.URI>(() => {
     const queryMainConnectionURI = new URLSearchParams(window.location.search).get('mainConnectionURI')
     return new Connection.URI(
-      queryMainConnectionURI || `${ws_protocol}://${globalAddress.value}/mavlink2rest/ws/mavlink`
+      queryMainConnectionURI || `ws://127.0.0.1:6040/v1/ws/mavlink`
     )
   })
   const mainConnectionURI = ref(_mainConnectionURI)
