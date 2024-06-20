@@ -48,6 +48,7 @@
     "localforage": "^1.10.0",
     "pinia": "^2.0.13",
     "roboto-fontface": "*",
+    "roslib": "^1.4.1",
     "semver": "^7.5.4",
     "sweetalert2": "^11.7.1",
     "tailwind-scrollbar-hide": "^1.1.7",
