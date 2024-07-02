@@ -440,8 +440,8 @@ onMounted(() => {
     handleService(
       ros,
       store,
-      'get_map_view', // Update with the actual service name
-      'interfaces/MapView' // Update with the actual service type
+      'set_map_view', // Update with the actual service name
+      'arista_interfaces/MapView' // Update with the actual service type
     );
   });
       
@@ -487,7 +487,7 @@ const vehicleTypesAssignedToCurrentProfile = computed({
   transition: all 0.2s;
   position: absolute;
   z-index: 60;
-  background-color: rgb(71 85 105);
+  background-color: rgb(13, 77, 0);
 }
 .left-panel {
   top: 0%;

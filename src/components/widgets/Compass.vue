@@ -117,7 +117,7 @@ const renderCanvas = (): void => {
 
   ////////////////////////// ROS SUBSCRIPTION ////////////////////////////////////////
 
-  const { greenMarkerValue } = getHomeHeading('/true_heading', 'std_msgs/Float32')
+  const { greenMarkerValue } = getHomeHeading('/home_heading', 'std_msgs/Float32')
 
   watch(greenMarkerValue, (newVal) => {
     renderVariables.heading = newVal

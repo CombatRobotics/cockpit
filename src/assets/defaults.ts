@@ -1,6 +1,10 @@
 import { MavType } from '@/libs/connection/m2r/messages/mavlink2rest-enum'
 import { type MiniWidgetProfile, MiniWidgetType } from '@/types/miniWidgets'
 import { type Profile, WidgetType } from '@/types/widgets'
+// import * as fs from 'fs';
+import fs from 'fs';
+// import data from './cockpit-widget-profile.json';
+import { v4 as uuid4 } from 'uuid'
 
 export const defaultRovProfileHash = 'c2bcf04d-048f-496f-9d78-fc4002608028'
 export const defaultBoatProfileHash = 'adb7d856-f2e5-4980-aaeb-c39c1fa3562b'
@@ -12,6 +16,22 @@ export const defaultProfileVehicleCorrespondency = {
   [MavType.MAV_TYPE_QUADROTOR]: defaultMavProfileHash,
 }
 
+// console.log(data);
+// const jsonString = JSON.stringify(data);
+// // console.log(jsonString);
+// const maybeProfile = JSON.parse(jsonString);
+// console.log(maybeProfile);
+
+// const newProfile = {
+//   name: maybeProfile.name,
+//   hash: maybeProfile.hash,
+//   views: maybeProfile.views,
+// };
+
+
+// maybeProfile.hash = uuid4()
+// const newProfile = saveProfile(maybeProfile)
+// loadProfile(newProfile)
 export const defaultWidgetManagerVars = {
   timesMounted: 0,
   configMenuOpen: false,
@@ -741,4 +761,5 @@ export const miniWidgetsProfiles: MiniWidgetProfile[] = [
     ],
   },
 ]
+
 export const miniWidgetsProfile = miniWidgetsProfiles[0]

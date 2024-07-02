@@ -15,6 +15,7 @@ export enum MiniWidgetType {
   MiniVideoRecorder = 'MiniVideoRecorder',
   ModeSelector = 'ModeSelector',
   SatelliteIndicator = 'SatelliteIndicator',
+  PingIndicator = 'PingIndicator',
   ViewSelector = 'ViewSelector',
 }
 

@@ -1,0 +1,472 @@
+{
+    "hash": "1b5436d5-6baf-4510-be1c-2b0f506e6bee",
+    "name": "Arista GUI",
+    "views": [
+        {
+            "hash": "1e02e227-f07f-4ef8-aebd-97c4d1f9c3ec",
+            "name": "Vehicle System Status",
+            "widgets": [
+                {
+                    "hash": "b2975978-4049-4793-95fb-71206108e3ea",
+                    "name": "IFrame",
+                    "component": "IFrame",
+                    "position": {
+                        "x": 0.4,
+                        "y": 0.32
+                    },
+                    "size": {
+                        "width": 0.2,
+                        "height": 0.36
+                    },
+                    "options": {
+                        "source": "http://localhost:5000/"
+                    },
+                    "managerVars": {
+                        "timesMounted": 1,
+                        "configMenuOpen": false,
+                        "allowMoving": true,
+                        "lastNonMaximizedX": 0.4,
+                        "lastNonMaximizedY": 0.32,
+                        "lastNonMaximizedWidth": 0.2,
+                        "lastNonMaximizedHeight": 0.36,
+                        "highlighted": false
+                    }
+                }
+            ],
+            "miniWidgetContainers": [
+                {
+                    "name": "Bottom-left container",
+                    "widgets": [
+                        {
+                            "component": "ViewSelector",
+                            "name": "ViewSelector",
+                            "options": {},
+                            "hash": "8485ba5a-3a33-4ba6-8a27-ab0a40f7770e",
+                            "managerVars": {
+                                "timesMounted": 0,
+                                "configMenuOpen": false,
+                                "highlighted": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Bottom-center container",
+                    "widgets": []
+                },
+                {
+                    "name": "Bottom-right container",
+                    "widgets": []
+                }
+            ],
+            "showBottomBarOnBoot": true,
+            "visible": true
+        },
+        {
+            "hash": "d89af831-1729-4c7d-b413-98a91724f1bd",
+            "name": "Map View",
+            "widgets": [
+                {
+                    "hash": "78dc004f-d405-4c86-9cc2-8d0bf27b33be",
+                    "name": "VirtualHorizon",
+                    "component": "VirtualHorizon",
+                    "position": {
+                        "x": 0.8882812499999999,
+                        "y": 0.7655061843018908
+                    },
+                    "size": {
+                        "width": 0.07174479166666667,
+                        "height": 0.16371901445250028
+                    },
+                    "options": {},
+                    "managerVars": {
+                        "timesMounted": 109,
+                        "configMenuOpen": false,
+                        "allowMoving": true,
+                        "lastNonMaximizedX": 0.4,
+                        "lastNonMaximizedY": 0.32,
+                        "lastNonMaximizedWidth": 0.2,
+                        "lastNonMaximizedHeight": 0.36,
+                        "highlighted": false
+                    }
+                },
+                {
+                    "hash": "11ae28a2-7265-4ff8-af9a-e696105ac314",
+                    "name": "Compass",
+                    "component": "Compass",
+                    "position": {
+                        "x": 0.7977864583333334,
+                        "y": 0.7732541179419237
+                    },
+                    "size": {
+                        "width": 0.07500000000000001,
+                        "height": 0.14951446944577335
+                    },
+                    "options": {
+                        "headingStyle": "North Up"
+                    },
+                    "managerVars": {
+                        "timesMounted": 109,
+                        "configMenuOpen": false,
+                        "allowMoving": true,
+                        "lastNonMaximizedX": 0.4,
+                        "lastNonMaximizedY": 0.32,
+                        "lastNonMaximizedWidth": 0.2,
+                        "lastNonMaximizedHeight": 0.36,
+                        "highlighted": false
+                    }
+                },
+                {
+                    "hash": "e6677d68-fec9-4877-aee0-63a267e68c23",
+                    "name": "VideoPlayer",
+                    "component": "VideoPlayer",
+                    "position": {
+                        "x": 0.012630208333333337,
+                        "y": 0.057861578512220846
+                    },
+                    "size": {
+                        "width": 0.215625,
+                        "height": 0.29026859723970405
+                    },
+                    "options": {
+                        "videoFitStyle": "cover",
+                        "flipHorizontally": false,
+                        "flipVertically": false,
+                        "rotationAngle": 0
+                    },
+                    "managerVars": {
+                        "timesMounted": 109,
+                        "configMenuOpen": false,
+                        "allowMoving": true,
+                        "lastNonMaximizedX": 0.4,
+                        "lastNonMaximizedY": 0.32,
+                        "lastNonMaximizedWidth": 0.2,
+                        "lastNonMaximizedHeight": 0.36,
+                        "highlighted": false
+                    }
+                },
+                {
+                    "hash": "c70e4df5-69a3-422c-9fde-2a5249b6e0f4",
+                    "name": "Map",
+                    "component": "Map",
+                    "position": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "size": {
+                        "width": 1,
+                        "height": 1
+                    },
+                    "options": {
+                        "showVehiclePath": true
+                    },
+                    "managerVars": {
+                        "timesMounted": 109,
+                        "configMenuOpen": false,
+                        "allowMoving": true,
+                        "lastNonMaximizedX": 0.4,
+                        "lastNonMaximizedY": 0.32,
+                        "lastNonMaximizedWidth": 0.2,
+                        "lastNonMaximizedHeight": 0.36,
+                        "highlighted": false
+                    }
+                }
+            ],
+            "miniWidgetContainers": [
+                {
+                    "name": "Bottom-left container",
+                    "widgets": [
+                        {
+                            "component": "ViewSelector",
+                            "name": "ViewSelector",
+                            "options": {},
+                            "hash": "c19b8d68-8335-447d-ad70-0412e5312be2",
+                            "managerVars": {
+                                "timesMounted": 0,
+                                "configMenuOpen": false,
+                                "highlighted": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Bottom-center container",
+                    "widgets": [
+                        {
+                            "component": "SatelliteIndicator",
+                            "name": "SatelliteIndicator",
+                            "options": {},
+                            "hash": "3af8b8bb-ffc6-40b5-bf73-165520b96eb1",
+                            "managerVars": {
+                                "timesMounted": 0,
+                                "configMenuOpen": false,
+                                "highlighted": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Bottom-right container",
+                    "widgets": []
+                }
+            ],
+            "showBottomBarOnBoot": true,
+            "visible": true
+        },
+        {
+            "hash": "16b3f609-386a-4fe7-95a5-ee68ba4076cb",
+            "name": "Video View",
+            "widgets": [
+                {
+                    "hash": "3d083b56-aa51-4d0e-9e8d-77d076a512a9",
+                    "name": "IFrame",
+                    "component": "IFrame",
+                    "position": {
+                        "x": 0.9621093749999999,
+                        "y": 0.8796863412839103
+                    },
+                    "size": {
+                        "width": 0.028776041666666696,
+                        "height": 0.05891685489413039
+                    },
+                    "options": {
+                        "source": "http://localhost:5000/"
+                    },
+                    "managerVars": {
+                        "timesMounted": 7,
+                        "configMenuOpen": false,
+                        "allowMoving": true,
+                        "lastNonMaximizedX": 0.7626302083333334,
+                        "lastNonMaximizedY": 0.34953558751506614,
+                        "lastNonMaximizedWidth": 0.205859375,
+                        "lastNonMaximizedHeight": 0.18454499559764798,
+                        "highlighted": false
+                    }
+                },
+                {
+                    "hash": "ea01c1ef-08e9-4907-a425-a28eb0d8cc43",
+                    "name": "Map",
+                    "component": "Map",
+                    "position": {
+                        "x": 0.014583333333333337,
+                        "y": 0.07464876806562543
+                    },
+                    "size": {
+                        "width": 0.166796875,
+                        "height": 0.22311983902608573
+                    },
+                    "options": {
+                        "showVehiclePath": true
+                    },
+                    "managerVars": {
+                        "timesMounted": 109,
+                        "configMenuOpen": false,
+                        "allowMoving": true,
+                        "lastNonMaximizedX": 0.4,
+                        "lastNonMaximizedY": 0.32,
+                        "lastNonMaximizedWidth": 0.2,
+                        "lastNonMaximizedHeight": 0.36,
+                        "highlighted": false
+                    }
+                },
+                {
+                    "hash": "3388126a-88dd-496a-b9e0-ac5036a86a19",
+                    "name": "VirtualHorizon",
+                    "component": "VirtualHorizon",
+                    "position": {
+                        "x": 0.9091145833333334,
+                        "y": 0.09014463534569124
+                    },
+                    "size": {
+                        "width": 0.07955729166666668,
+                        "height": 0.1353099244390464
+                    },
+                    "options": {},
+                    "managerVars": {
+                        "timesMounted": 109,
+                        "configMenuOpen": false,
+                        "allowMoving": true,
+                        "lastNonMaximizedX": 0.4,
+                        "lastNonMaximizedY": 0.32,
+                        "lastNonMaximizedWidth": 0.2,
+                        "lastNonMaximizedHeight": 0.36,
+                        "highlighted": false
+                    }
+                },
+                {
+                    "hash": "b4f88e6d-e17b-43b9-8d54-0b92c863fb9b",
+                    "name": "Compass",
+                    "component": "Compass",
+                    "position": {
+                        "x": 0.8283854166666668,
+                        "y": 0.09272727989236886
+                    },
+                    "size": {
+                        "width": 0.07500000000000001,
+                        "height": 0.1340186021657076
+                    },
+                    "options": {
+                        "headingStyle": "North Up"
+                    },
+                    "managerVars": {
+                        "timesMounted": 109,
+                        "configMenuOpen": false,
+                        "allowMoving": true,
+                        "lastNonMaximizedX": 0.4,
+                        "lastNonMaximizedY": 0.32,
+                        "lastNonMaximizedWidth": 0.2,
+                        "lastNonMaximizedHeight": 0.36,
+                        "highlighted": false
+                    }
+                },
+                {
+                    "hash": "05e682f0-997c-4c3c-af96-79081bbdcfdd",
+                    "name": "CompassHUD",
+                    "component": "CompassHUD",
+                    "position": {
+                        "x": 0.3270833333333334,
+                        "y": 0.06690083442559254
+                    },
+                    "size": {
+                        "width": 0.3373697916666667,
+                        "height": 0.051373976672023536
+                    },
+                    "options": {
+                        "showYawValue": true,
+                        "hudColor": "#FFFFFF",
+                        "useNegativeRange": false
+                    },
+                    "managerVars": {
+                        "timesMounted": 109,
+                        "configMenuOpen": false,
+                        "allowMoving": true,
+                        "lastNonMaximizedX": 0.4,
+                        "lastNonMaximizedY": 0.32,
+                        "lastNonMaximizedWidth": 0.2,
+                        "lastNonMaximizedHeight": 0.36,
+                        "highlighted": false
+                    }
+                },
+                {
+                    "hash": "fbba41e7-5a98-4bad-a8f8-0c091e9f6632",
+                    "name": "ImageView",
+                    "component": "ImageView",
+                    "position": {
+                        "x": 0.1467447916666667,
+                        "y": 0.14696281537259898
+                    },
+                    "size": {
+                        "width": 0.7091145833333333,
+                        "height": 0.7254442033548842
+                    },
+                    "options": {
+                        "src": "https://media.licdn.com/dms/image/C4E1BAQGO4Eo_b1dWHg/company-background_10000/0/1609105928569/combatrobotics_cover?e=2147483647&v=beta&t=tFOum8QJhbtNDkzFA13X_n9BLdKQ_PYK3lBSjUDfRCs",
+                        "fitStyle": "cover"
+                    },
+                    "managerVars": {
+                        "timesMounted": 53,
+                        "configMenuOpen": false,
+                        "allowMoving": true,
+                        "lastNonMaximizedX": 0.4,
+                        "lastNonMaximizedY": 0.32,
+                        "lastNonMaximizedWidth": 0.2,
+                        "lastNonMaximizedHeight": 0.36,
+                        "highlighted": false
+                    }
+                },
+                {
+                    "hash": "9ac050e0-8cbd-4602-a770-c1e892ee6cb1",
+                    "name": "VideoPlayer",
+                    "component": "VideoPlayer",
+                    "position": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "size": {
+                        "width": 1,
+                        "height": 1
+                    },
+                    "options": {
+                        "videoFitStyle": "cover",
+                        "flipHorizontally": false,
+                        "flipVertically": false,
+                        "rotationAngle": 0
+                    },
+                    "managerVars": {
+                        "timesMounted": 109,
+                        "configMenuOpen": false,
+                        "allowMoving": true,
+                        "lastNonMaximizedX": 0.4,
+                        "lastNonMaximizedY": 0.32,
+                        "lastNonMaximizedWidth": 0.2,
+                        "lastNonMaximizedHeight": 0.36,
+                        "highlighted": false
+                    }
+                }
+            ],
+            "miniWidgetContainers": [
+                {
+                    "name": "Bottom-left container",
+                    "widgets": [
+                        {
+                            "component": "ViewSelector",
+                            "name": "ViewSelector",
+                            "options": {},
+                            "hash": "46ca0452-c673-44af-9401-f41f50547424",
+                            "managerVars": {
+                                "timesMounted": 0,
+                                "configMenuOpen": false,
+                                "highlighted": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Bottom-center container",
+                    "widgets": [
+                        {
+                            "component": "SatelliteIndicator",
+                            "name": "SatelliteIndicator",
+                            "options": {},
+                            "hash": "65213a0c-bf2b-4ce8-bb26-f5b8c57c50de",
+                            "managerVars": {
+                                "timesMounted": 0,
+                                "configMenuOpen": false,
+                                "highlighted": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Bottom-right container",
+                    "widgets": [
+                        {
+                            "component": "SatelliteIndicator",
+                            "name": "SatelliteIndicator",
+                            "options": {},
+                            "hash": "aae015e3-7011-4cc1-80a7-7d07a619f93b",
+                            "managerVars": {
+                                "timesMounted": 0,
+                                "configMenuOpen": false,
+                                "highlighted": false
+                            }
+                        },
+                        {
+                            "component": "MiniVideoRecorder",
+                            "name": "MiniVideoRecorder",
+                            "options": {},
+                            "hash": "c6c184da-b06b-4e04-9802-08e3e4125235",
+                            "managerVars": {
+                                "timesMounted": 0,
+                                "configMenuOpen": false,
+                                "highlighted": false
+                            }
+                        }
+                    ]
+                }
+            ],
+            "showBottomBarOnBoot": true,
+            "visible": true
+        }
+    ]
+}

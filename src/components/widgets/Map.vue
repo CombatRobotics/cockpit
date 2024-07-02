@@ -82,6 +82,7 @@
 
 <script setup lang="ts">
 import '@/libs/map/LeafletRotatedMarker.js'
+import { initializeRosService } from '@/composables/useRosService'
 
 import { useRefHistory } from '@vueuse/core'
 import { formatDistanceToNow } from 'date-fns'
@@ -236,10 +237,26 @@ onMounted(async () => {
 
   initializeRosPolyline(
     'ws://localhost:9090', // Adjust the URL to your ROS setup
-    '/random_navsat_fix',
-    'sensor_msgs/NavSatFix',
+    '/return_home_path',
+    'interfaces/NavSatFixMsg',
     map.value
   );
+
+//   const ros = new ROSLIB.Ros({
+//     url: 'ws://localhost:9090', // Update this with your ROS server URL
+//   });
+
+//   ros.on('connection', () => {
+//     console.log('Connected to ROS');
+//     initializeRosService(
+//       ros,
+//       'get_return_path', 
+//       "/home/navneeth/test/coordinates.csv",
+//       // Update with the actual service name
+//       'interfaces/ReturnPath' // Update with the actual service type
+//     );
+//   });
+
 })
 
 // Before unmounting:

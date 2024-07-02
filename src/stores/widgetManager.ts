@@ -25,6 +25,8 @@ import { type Profile, type View, type Widget, isProfile, isView, WidgetType } f
 
 import { useMainVehicleStore } from './mainVehicle'
 
+import data from './arista_gui.json';
+
 const savedProfilesKey = 'cockpit-saved-profiles-v8'
 
 export const useWidgetManagerStore = defineStore('widget-manager', () => {
@@ -191,6 +193,8 @@ export const useWidgetManagerStore = defineStore('widget-manager', () => {
     reader.onload = (event: Event) => {
       // @ts-ignore: We know the event type and need refactor of the event typing
       const contents = event.target.result
+      console.log(contents);
+
       const maybeProfile = JSON.parse(contents)
       if (!isProfile(maybeProfile)) {
         Swal.fire({ icon: 'error', text: 'Invalid profile file.', timer: 3000 })
@@ -481,18 +485,87 @@ export const useWidgetManagerStore = defineStore('widget-manager', () => {
   }
 
   // If the user does not have it's own profiles yet, try to fetch them from the vehicle, and if it fails, create default ones
-  if (savedProfiles.value.isEmpty()) {
-    // We use a self invoked await function to avoid moving the entire store to async
-    ;(async () => importProfilesFromVehicle())()
-    widgetProfiles.forEach((profile) => {
-      const userProfile = structuredClone(profile)
-      userProfile.name = userProfile.name.replace('Default', 'User')
-      userProfile.hash = uuid4()
-      savedProfiles.value.push(userProfile)
-    })
-    loadProfile(savedProfiles.value[0])
-    location.reload()
+  // if (savedProfiles.value.isEmpty()) {
+  //   // We use a self invoked await function to avoid moving the entire store to async
+  //   ;(async () => importProfilesFromVehicle())()
+  //   widgetProfiles.forEach((profile) => {
+  //     const userProfile = structuredClone(profile)
+  //     userProfile.name = userProfile.name.replace('Default', 'User')
+  //     userProfile.hash = uuid4()
+  //     savedProfiles.value.push(userProfile)
+  //   })
+  //   loadProfile(savedProfiles.value[0])
+  //   location.reload()
+  // }
+
+  const jsonString = JSON.stringify(data);
+// console.log(jsonString);
+  const jsonLoadedProfile = JSON.parse(jsonString);
+
+  const savedProfilesNames = savedProfiles.value.map((p: Profile) => p.name)
+  let newName = jsonLoadedProfile.name
+  if (!savedProfilesNames.includes(newName)) {
+    jsonLoadedProfile.hash = uuid4()
+    const newJsonProfile = saveProfile(jsonLoadedProfile)
+    loadProfile(newJsonProfile)
   }
+
+
+
+
+
+
+  // jsonLoadedProfile.hash = uuid4()
+  // const newJsonProfile = saveProfile(jsonLoadedProfile)
+  // loadProfile(newJsonProfile)
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // function saveProfile(profile: Profile): Profile {
+  //   const savedProfilesNames = savedProfiles.value.map((p: Profile) => p.name)
+  //   let newName = profile.name
+  //   let nameVersion = 0
+  //   // Check if there's already a profile with this name
+  //   while (savedProfilesNames.includes(newName)) {
+  //     // Check if there's already a profile with this name and a versioning
+  //     if (newName.length > 3 && newName.at(-3) === '(' && newName.at(-1) === ')' && !isNaN(Number(newName.at(-2)))) {
+  //       // If so, increase the version number and remove the versioning part, so the new version can be applied
+  //       nameVersion = parseInt(newName.at(-2) as string)
+  //       newName = `${newName.substring(0, newName.length - 3)}`
+  //     }
+  //     newName = `${newName} (${nameVersion + 1})`
+  //   }
+
+  //   const newProfile = { ...profile, ...{ name: newName } }
+  //   savedProfiles.value.push(newProfile)
+  //   return newProfile
+  // }
+
+
+  // const isProfileExist = widgetProfiles.some(profile => 
+  //   profile.name === jsonLoadedProfile.name && 
+  //   profile.hash === jsonLoadedProfile.hash && 
+  //   profile.views === jsonLoadedProfile.views
+  // );
+  
+  // if (!isProfileExist) {
+    
+  // } 
+
+  
+
 
   // Make sure the interface is not booting with a profile or view that does not exist
   if (currentProfileIndex.value >= savedProfiles.value.length) currentProfileIndex.value = 0

@@ -4,6 +4,7 @@ import ROSLIB from 'roslib';
 import L, { type LatLngTuple, Map } from 'leaflet';
 
 
+
 // interface LatLngTuple {
 //   lat: number;
 //   lng: number;
@@ -104,10 +105,20 @@ export function initializeRosPolyline(rosUrl: string, topicName: string, message
 
   topic.subscribe((message: any) => {
     const { latitude, longitude } = message;
-    if (latitude !== undefined && longitude !== undefined) {
-      const coordinates: LatLngTuple = [latitude, longitude];
-      polylineCoordinates.push(coordinates);
+    // if (latitude !== undefined && longitude !== undefined) {
+    //   const coordinates: LatLngTuple = [latitude, longitude];
+    //   polylineCoordinates.push(coordinates);
 
+    //   const polyline = L.polyline(polylineCoordinates, { color: 'green' });
+    //   polyline.addTo(map);
+    // }
+    if (latitude && longitude && latitude.length === longitude.length) {
+      for (let i = 0; i < latitude.length; i++) {
+        const coordinates: LatLngTuple = [latitude[i], longitude[i]];
+        polylineCoordinates.push(coordinates);
+      }
+
+      // Create or update the polyline on the map
       const polyline = L.polyline(polylineCoordinates, { color: 'green' });
       polyline.addTo(map);
     }
