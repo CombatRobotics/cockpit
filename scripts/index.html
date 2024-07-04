@@ -1,0 +1,53 @@
+<html>
+        <head>
+            <title>ROS 2 Float64 Subscriber</title>
+            <style>
+                .value {
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+                .green {
+                    color: green;
+                }
+                .yellow {
+                    color: rgb(255, 166, 0);
+                }
+                .red {
+                    color: red;
+                }
+                .wifi-symbol {
+                    display: inline-block;
+                    width: 24px;
+                    height: 24px;
+                    background-image: url('https://img.icons8.com/ios-filled/50/000000/wifi.png');
+                    background-size: contain;
+                    vertical-align: middle;
+                }
+            </style>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', (event) => {
+                    var socket = io();
+                    socket.on('update_value', function(data) {
+                        var roundedValue = parseFloat(data.value).toFixed(3);
+                        var valueElement = document.getElementById('value');
+                        
+                        // Update the value text
+                        valueElement.innerText = roundedValue;
+                        
+                        // Apply color based on the value
+                        if (data.value >= 100) {
+                            valueElement.className = 'value red';
+                        } else if (data.value >= 50) {
+                            valueElement.className = 'value yellow';
+                        } else {
+                            valueElement.className = 'value green';
+                        }
+                    });
+                });
+            </script>
+        </head>
+        <body>
+            <div id="value" class="value green">0.000</div>
+        </body>
+        </html>
