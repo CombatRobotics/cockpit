@@ -235,27 +235,25 @@ onMounted(async () => {
   targetFollower.goToTarget(WhoToFollow.HOME)
 
 
-  initializeRosPolyline(
-    'ws://localhost:9090', // Adjust the URL to your ROS setup
-    '/return_home_path',
-    'interfaces/NavSatFixMsg',
-    map.value
-  );
+  // initializeRosPolyline(
+  //   'ws://localhost:9090', // Adjust the URL to your ROS setup
+  //   '/return_home_path',
+  //   'interfaces/NavSatFixMsg',
+  //   map.value
+  // );
 
-//   const ros = new ROSLIB.Ros({
-//     url: 'ws://localhost:9090', // Update this with your ROS server URL
-//   });
+  // const ros = new ROSLIB.Ros({
+  //   url: 'ws://localhost:9090', // Update this with your ROS server URL
+  // });
 
-//   ros.on('connection', () => {
-//     console.log('Connected to ROS');
-//     initializeRosService(
-//       ros,
-//       'get_return_path', 
-//       "/home/navneeth/test/coordinates.csv",
-//       // Update with the actual service name
-//       'interfaces/ReturnPath' // Update with the actual service type
-//     );
-//   });
+  initializeRosService(
+      'ws://localhost:9090',
+      'set_home_path', 
+      map.value
+      // Update with the actual service name
+       // Update with the actual service type
+    );
+
 
 })
 

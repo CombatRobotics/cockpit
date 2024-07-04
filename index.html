@@ -39,15 +39,15 @@
             const underlyingFallback = document.getElementById('underlying-fallback');
             const clearSettingsButton = document.getElementById('clear-settings-btn');
 
-            const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
+            const isChrome = true
             const isEdge = /Edg/.test(navigator.userAgent)
 
-            if (!isChrome && !isEdge) {
-                overlay.style.display = 'flex'
-                content.style.display = 'none'
-            } else {
+            // if (!isChrome && !isEdge) {
+            //     overlay.style.display = 'flex'
+            //     content.style.display = 'none'
+            // } else {
                 underlyingFallback.style.display = 'flex';
-            }
+            // }
 
             proceedButton.addEventListener('click', function() {
                 overlay.style.display = 'none';
