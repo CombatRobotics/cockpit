@@ -104,23 +104,42 @@ export function initializeRosPolyline(rosUrl: string, topicName: string, message
   const polylineCoordinates: LatLngTuple[] = [];
 
   topic.subscribe((message: any) => {
-    const { latitude, longitude } = message;
-    // if (latitude !== undefined && longitude !== undefined) {
-    //   const coordinates: LatLngTuple = [latitude, longitude];
-    //   polylineCoordinates.push(coordinates);
+
+    const latitude = message.latitude; 
+    const longitude = message.longitude;
+
+    const coordinates: LatLngTuple = [latitude, longitude];
+    polylineCoordinates.push(coordinates);
+    const polyline = L.polyline(polylineCoordinates, { color: 'green' });
+    polyline.addTo(map);
+
+
+
+
+
+
+
+
+
+
+
+
+    // const { latitude, longitude } = message;
+    // // if (latitude !== undefined && longitude !== undefined) {
+    // //   const coordinates: LatLngTuple = [latitude, longitude];
+    // //   polylineCoordinates.push(coordinates);
+
+    // //   const polyline = L.polyline(polylineCoordinates, { color: 'green' });
+    // //   polyline.addTo(map);
+    // // }
+    // if (latitude && longitude && latitude.length === longitude.length) {
+    //   for (let i = 0; i < latitude.length; i++) {
+    //     const coordinates: LatLngTuple = [latitude[i], longitude[i]];
+    //     polylineCoordinates.push(coordinates);
+    //   }
 
     //   const polyline = L.polyline(polylineCoordinates, { color: 'green' });
     //   polyline.addTo(map);
     // }
-    if (latitude && longitude && latitude.length === longitude.length) {
-      for (let i = 0; i < latitude.length; i++) {
-        const coordinates: LatLngTuple = [latitude[i], longitude[i]];
-        polylineCoordinates.push(coordinates);
-      }
-
-      // Create or update the polyline on the map
-      const polyline = L.polyline(polylineCoordinates, { color: 'green' });
-      polyline.addTo(map);
-    }
   });
 }

@@ -82,7 +82,7 @@
 
 <script setup lang="ts">
 import '@/libs/map/LeafletRotatedMarker.js'
-import { initializeRosService } from '@/composables/useRosService'
+import { initializeRosServicePolyline } from '@/composables/useRosService'
 
 import { useRefHistory } from '@vueuse/core'
 import { formatDistanceToNow } from 'date-fns'
@@ -235,24 +235,24 @@ onMounted(async () => {
   targetFollower.goToTarget(WhoToFollow.HOME)
 
 
-  // initializeRosPolyline(
-  //   'ws://localhost:9090', // Adjust the URL to your ROS setup
-  //   '/return_home_path',
-  //   'interfaces/NavSatFixMsg',
-  //   map.value
-  // );
+  initializeRosPolyline(
+    'ws://localhost:9090', // Adjust the URL to your ROS setup
+    '/return_home_path',
+    'arista_interfaces/msg/ReturnPath',
+    map.value
+  );
 
   // const ros = new ROSLIB.Ros({
   //   url: 'ws://localhost:9090', // Update this with your ROS server URL
   // });
 
-  initializeRosService(
-      'ws://localhost:9090',
-      'set_home_path', 
-      map.value
-      // Update with the actual service name
-       // Update with the actual service type
-    );
+  // initializeRosServicePolyline(
+  //     'ws://localhost:9091',
+  //     'set_home_path', 
+  //     map.value
+  //     // Update with the actual service name
+  //      // Update with the actual service type
+  //   );
 
 
 })

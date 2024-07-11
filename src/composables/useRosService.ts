@@ -2,8 +2,11 @@
 
 // import L, { LatLngTuple ,Map} from 'leaflet';
 import { ref,onMounted } from 'vue';
-import L, { type LatLngTuple, Map } from 'leaflet';
+import L, { Map } from 'leaflet';
 import ROSLIB from 'roslib'
+
+type LatLngTuple = [number, number];
+
 
 
 export const handleService = (
@@ -43,53 +46,9 @@ export const handleService = (
   });
 };
 
-// export function initializeRosService(ros: ROSLIB.Ros, serviceName: string, map: Map) {
-//   // const ros = new ROSLIB.Ros({
-//   //   url: rosUrl,
-//   // });
-
-//   ros.on('connection', () => {
-//     console.log('Connected to ROS websocket server.');
-//   });
-
-//   ros.on('error', (error) => {
-//     console.log('Error connecting to ROS websocket server: ', error);
-//   });
-
-//   ros.on('close', () => {
-//     console.log('Connection to ROS websocket server closed.');
-//   });
-
-//   const service = new ROSLIB.Service({
-//     ros: ros,
-//     name: serviceName,
-//     serviceType: 'arista_interfaces/srv/ReturnPath',
-//   });
-
-//   service.advertise(async (request, response) => {
-//     try {
-//       const coordinates = await readCoordinatesFromCSV(csvFilePath);
-//       console.log(csvFilePath);
-//       drawPolylineOnMap(coordinates, map);
-
-//       if (request.show_return_path) {
-//         const returnCoordinates = [...coordinates].reverse();
-//         drawPolylineOnMap(returnCoordinates, map, 'blue');
-//       }
-
-//       response.success = true;
-//     } catch (error) {
-//       console.log('Error processing service request: ', error);
-//       response.success = false;
-//     }
-//     response.success;
-//     return true;
-//   });
-// }
 
 
-export function initializeRosService(rosUrl: string, serviceName: string, map: Map) {
-
+export function initializeRosServicePolyline(rosUrl: string, serviceName: string, map: Map) {
   const ros = new ROSLIB.Ros({
     url: rosUrl,
   });
@@ -109,26 +68,20 @@ export function initializeRosService(rosUrl: string, serviceName: string, map: M
   const service = new ROSLIB.Service({
     ros: ros,
     name: serviceName,
-    serviceType: 'arista_interfaces/srv/SetHome',
+    serviceType: 'arista_interfaces/srv/SetHome', 
   });
-
+  const polylineCoordinates: LatLngTuple[] = [];
   service.advertise((request, response) => {
     try {
-      const { latitude, longitude } = request;
+      console.log('Received service request:', request);
+      const latitude = request.latitude; 
+      const longitude = request.longitude;
 
-      // Use the latitude and longitude to create a coordinate object
       const coordinates: LatLngTuple = [latitude, longitude];
-      // const coordinate = { lat: latitude, lng: longitude };
-      // const polylineCoordinates: LatLngTuple[] = [];
+      polylineCoordinates.push(coordinates);
+      const polyline = L.polyline(polylineCoordinates, { color: 'green' });
+      polyline.addTo(map);
 
-      // Draw the polyline on the map
-      drawPolylineOnMap([coordinates], map);
-
-      // Optionally handle the set_home flag if needed
-      if (request.set_home) {
-        // Handle the set_home logic here if necessary
-        console.log('Set home requested');
-      }
 
       response.success = true;
     } catch (error) {
@@ -137,25 +90,4 @@ export function initializeRosService(rosUrl: string, serviceName: string, map: M
     }
     return response.success;
   });
-}
-
-// async function readCoordinatesFromCSV(filePath: string): Promise<LatLngTuple[]> {
-//   const response = await fetch(filePath);
-//   const data = await response.text();
-
-//   const polylineCoordinates: LatLngTuple[] = [];
-
-//   data.split('\n').forEach((line) => {
-//     const [latitude, longitude] = line.split(',').map(Number);
-//     if (!isNaN(latitude) && !isNaN(longitude)) {
-//       polylineCoordinates.push([latitude, longitude]);
-//     }
-//   });
-
-//   return polylineCoordinates;
-// }
-
-function drawPolylineOnMap(coordinates: LatLngTuple[], map: Map, color: string = 'green') {
-  const polyline = L.polyline(coordinates, { color });
-  polyline.addTo(map);
 }
